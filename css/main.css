@@ -1,0 +1,255 @@
+
+#upload_page {
+    display: none;
+}
+
+#add_word_page {
+    display: none;
+}
+
+#outter_div {
+    display: table;
+    margin: auto;
+}
+
+#users_div {
+    text-align: left;
+    padding: 0px !important;
+    overflow-x: hidden !important;
+    overflow: auto !important;
+    height: 215px; 
+}
+
+#words_div {
+    overflow:auto;
+}
+#history_div {
+    display: table-cell;
+    width: 250px;
+    max-width: 250px;
+
+    overflow: auto;
+    overflow-x: hidden !important;
+    text-align:center; 
+    margin: 3px;
+    font-size: small;
+}
+
+#add_remove_button {
+    font-size: small;
+    top: 29px;
+    left: 0;
+    margin: 4px 0px 0px 0px; 
+    position: relative;
+    width: 200px;
+}
+
+
+#analysis_div {
+    position: relative;
+    top: 21px;
+    width:547px; 
+    height: 157px;
+    z-index: 1;
+}
+
+#audio_button {
+    position: relative;
+    top: 26px;
+	height: 18px;
+	width: 18px;
+}
+
+#playerRecorder {
+	width: 1px;
+	height: 1px;
+	position: absolute;
+}
+
+/*
+#loading_div {
+    display: none;
+    position: absolute;
+    top: 45px;
+    width:547px; 
+    height: 157px;
+    z-index: 3;   
+
+}*/
+#delete_area {
+    width: 100%;
+    height: 20px;
+}
+
+#content_div {
+    position:relative;
+    display:table-cell;
+    vertical-align: top;
+    height: 250px; 
+    padding: 0px 3px 3px 3px;
+}
+
+#difficulty {
+    position:relative;
+    vertical-align: top;
+    bottom: 0px;
+    left: 0px;
+}
+
+#history {
+    padding: 0px !important;
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    height: 215px; 
+}
+
+#comments {
+    padding: 0px !important;
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    height: 215px; 
+}
+
+
+.difficulty_select {
+    top: 11px;
+    left: 0;
+    position: relative;
+    width: 200px;
+}
+
+
+.word_select {
+    width: 545px;
+}
+
+#word_title {
+    display: block;
+    padding: 3px;
+    width: 545px;
+    text-align: center;
+}
+
+.rec_button {
+    top: 11px;
+    font-size: small;
+    height: 29px;
+    position: relative;
+    right: -254px;
+}
+
+.play_button {
+    position: absolute;
+    height: 100%;
+    width: 40px !important;
+    top:0px;
+    left:0px;
+    margin: 0px;
+}
+
+.master_play_button {
+    position: absolute;
+    height: 100%;
+    width: 40px !important;
+    top:0px;
+    left:0px;
+    margin: 0px;
+}
+
+
+#recording_play_button {
+    position: absolute;
+    height: 100%;
+    width: 40px !important;
+    top:0px;
+    left:0px;
+    margin: 0px;
+}
+
+.download_button {
+    position: absolute;
+    height:15px;
+    width: 35px !important;
+    top: 15px;
+    right:0;
+    z-index:2;
+    margin-top: 2px;
+
+}
+
+.download_button .ui-button-text {
+    position: absolute;
+    height: 0px;
+    width: 0px;
+}
+
+#remove_history_button {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 0.5em;
+    left: auto;
+    top: 50%;
+    margin-top: -8px;
+
+}
+
+.important_button_css {
+    position: absolute;
+    height: 15px;
+    width: 33px !important;
+    top:0;
+    right:0;
+    z-index:1;
+}
+
+.important_button_css .ui-button-text {
+    height: 0px;
+    width: 0px;
+}
+
+.comment_button {
+    position: absolute;
+    height: 15px;
+    width: 35px !important;
+    top: 30px;
+    right:0;
+    z-index:2;
+    margin-top: 2px;
+
+}
+
+.comment_button .ui-button-text {
+    height: 0px;
+    width: 0px;
+}
+
+.canvas_container {
+    position: relative;
+    height: 75px;
+    display: inline-block;
+}
+
+.canvasarea {
+    border-width: 1px;
+    border-style: solid;
+    width: 500px;
+    height: 100%;
+    position: absolute;
+    margin-left: 45px;
+}
+
+#progress_bar {
+    width: 100%;
+}
+
+.draggable {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 0px;
+    position:relative; 
+    height: 47px;
+}
+
+
+
