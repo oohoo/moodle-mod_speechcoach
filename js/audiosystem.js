@@ -26,11 +26,13 @@ function soundProcessResult(result)
 //    console.log(result);
     var data = $.parseJSON(result);
     //Make sure this was after an analysis.
-    console.log(data);
+//    console.log(data);
 
-    if('error' in data) {
+    if(data != null && 'error' in data) {
         if(data.error == 1) {
-            alert("Error")
+            alert("Error");
+            $('#loading_div').dialog('close');
+            return;
         }
                 
         draw_canvas(document.getElementById('master_file'), data.master_data, generate_master_color_map(data.master_data));
@@ -52,10 +54,11 @@ function soundProcessResult(result)
         //Initialize the elements.
         init_history_area();
     } else {
-        console.log(result);
+        alert("Error");
     }
-    
     $('#loading_div').dialog('close');
+
+    
    
     
 }
@@ -64,9 +67,9 @@ function soundProcessResult(result)
 //Run this function when player is ready
 function playerrecorder_ready()
 {
-//    if (playerRecorder == undefined)
-//    {
-        playerRecorder = getFlashMovieObject('playerRecorder');
+    //    if (playerRecorder == undefined)
+    //    {
+    playerRecorder = getFlashMovieObject('playerRecorder');
 //    }
 }
 		

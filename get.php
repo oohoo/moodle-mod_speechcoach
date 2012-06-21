@@ -138,9 +138,16 @@ SCRIPT;
            
                 <script>
                     data = $data;
-                    console.log(data);
-                    draw_canvas(document.getElementById('master_file'), data.master_data, generate_master_color_map(data.master_data));
-                    draw_canvas(document.getElementById('comparison_file'), data.comparison_data, generate_color_map(data.frame_score, data.comparison_data));
+                    if(data != null && 'error' in data) {
+                        if(data.error == 1) {
+                            alert('Error');
+                        } else {
+                            draw_canvas(document.getElementById('master_file'), data.master_data, generate_master_color_map(data.master_data));
+                            draw_canvas(document.getElementById('comparison_file'), data.comparison_data, generate_color_map(data.frame_score, data.comparison_data));
+                        }
+                    } else {
+                        alert('Error');
+                    }
                     init_analysis_area();
                 </script>
 ANALYSISSCRIPT;

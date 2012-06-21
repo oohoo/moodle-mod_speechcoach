@@ -30,7 +30,6 @@ $string['modulename'] = 'Speech Coach';
 $string['modulenameplural'] = 'Speech Coaches';
 $string['modulename_help'] = '';
 $string['speechcoachname'] = 'Speech Coach Name';
-$string['speechcoachname_help'] = 'This is the content of the help tooltip associated with the speechcoachname field. Markdown syntax is supported.';
 $string['speechcoach'] = 'Speech Coach';
 $string['pluginadministration'] = 'Speech Coach Administration';
 $string['pluginname'] = 'Speech Coach';

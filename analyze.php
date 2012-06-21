@@ -1,5 +1,4 @@
 <?php
-
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
 
@@ -33,8 +32,14 @@ if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
 
     //If in mode sendsound, save the file from php://input to $contentSound
     $contentSound = file_get_contents('php://input');
+
     $tempname = tempnam(sys_get_temp_dir(), 'sch');
-    file_put_contents($tempname, $contentSound);
+
+    //44 is the length of an empty file. Don't ask me why.
+    if (strlen($contentSound) > 44) {
+        file_put_contents($tempname, $contentSound);
+    }
+   
 
     $filepath = uniqid();
     while (filepath_exists($filepath)) {
@@ -80,6 +85,7 @@ if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
     //Insert into database.
     $data = json_decode($output);
 //    $data->debugging_info = array(
+//          "x" => $contentSound
 //        "m-location" => urlencode($masterfile),
 //        "c-location" => urlencode($comparisonfile),
 //        'difficulty' => $difficulty,
@@ -107,7 +113,7 @@ if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
 
         echo json_encode($data);
     } else {
-        echo $output;
+        echo json_encode($data);
     }
     unlink($masterfile);
     unlink($tempname);

@@ -173,14 +173,12 @@ if (has_capability('mod/speechcoach:edit', $context)) {
             <script>
                 $("#word_select").combobox().change(function (event) {
                     $.post('visualize.php?id=<?php echo $id ?>' + '&word_id=' + $('#word_select :selected').attr('word_id'), function(data) {
-                        console.log($.parseJSON(data).data);
 
                         drawSelectedWord($.parseJSON(data).data);
                     });
                 }); 
                                         
                 $.post('visualize.php?id=<?php echo $id ?>' + '&word_id=' + $('#word_select :selected').attr('word_id'), function(data) {
-                    console.log($.parseJSON(data).data);
 
                     drawSelectedWord($.parseJSON(data).data);
                 });
