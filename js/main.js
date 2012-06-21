@@ -29,9 +29,9 @@ function init_components() {
     init_history_area();
     init_analysis_area();
 	
-	$('#divPlayerOptions').dialog({
-		autoOpen: false,
-		closeOnEscape: false,
+    $('#divPlayerOptions').dialog({
+        autoOpen: false,
+        closeOnEscape: false,
         modal: true,
         width: 450,
         buttons: [ {
@@ -48,14 +48,14 @@ function init_components() {
     });
 	
 		
-	$('#audio_button').button({
-		 icons: {
+    $('#audio_button').button({
+        icons: {
             primary: "ui-icon-volume-on"
         },
         text: false
-	}).click(function() {
-		$('#divPlayerOptions').dialog('open');
-	});
+    }).click(function() {
+        $('#divPlayerOptions').dialog('open');
+    });
     
 
 	
@@ -86,9 +86,8 @@ function init_components() {
         var selected = $('.history_selected_state');
         if(confirm("Delete (" + selected.length + ") items?")) {
             selected.each(function () {
-               console.log($('#delete_page').attr('value') + "&history_id=" + $(this).attr('history_id'));
-               $.post($('#delete_page').attr('value') + "&history_id=" + $(this).attr('history_id'));
-               $(this).remove(); 
+                $.post($('#delete_page').attr('value') + "&history_id=" + $(this).attr('history_id'));
+                $(this).remove(); 
             });
         }
     });
@@ -145,6 +144,7 @@ function init_components() {
         if(new Date().getTime() - $(this).attr('time') < 1000) {
             alert("You must hold the record button to record.");
         }
+        alert('Recording Complete');
     });
     
     $("#save_added_word_button").button({
@@ -156,12 +156,16 @@ function init_components() {
         playerRecorder.set_URLLoader($(this).attr('href') + '&word_name=' + encodeURIComponent($('#aWordTile').val()));   
         playerRecorder.uploadSound();
         alert("'" + $('#aWordTile').val() + "' added!");
+
         $('#word_selection').html('');
         $('#word_selection').append('<p id="word_loading">Loading...</p>');
 
-        $('#word_selection').load($('#word_selection_page').attr('value'), function() {
-            $('#word_selection').remove('#word_loading');
-        });
+        setTimeout(function() {
+            $('#word_selection').load($('#word_selection_page').attr('value'), function() {
+                $('#word_selection').remove('#word_loading');
+            });
+        }, 250);
+       
        
     });
     
@@ -300,7 +304,7 @@ function init_history_area() {
         },
         text: false
     }).click(function(event){
-		event.stopPropagation();
+        event.stopPropagation();
         playerRecorder.loadExternalSound($('#get_history_page').attr('value') + '&history_id=' + $(this).parent().attr('history_id') + '&type=user_file');
         playerRecorder.playSound();
     });
@@ -311,29 +315,51 @@ function init_history_area() {
         },
         text: false
     }).click(function() {
-        console.log($('#update_comment_page').attr('value') + '&history_id=' + $(this).parent().attr('history_id') + '&important=' + (this.checked ? '1' : '0'));
         $.post($('#update_comment_page').attr('value') + '&history_id=' + $(this).parent().attr('history_id') + '&important=' + (this.checked ? '1' : '0'));
     });
     
                       
     $(".progressbar").each(function() {
-		var targetscore = $(this).attr('target');
-        var progressbar = $(this).progressbar({
-            value: Math.round($(this).attr('value'))
-        });
-		progressbar.css('position', 'relative');
-		var target = $('<div> </div>');
-		target.css({
-			'position': 'absolute',
-			'top': '0px',
-			'left': '0px',
-			'width': targetscore + '%',
-			'height': '100%',
-			'border-style': 'solid',
-			'border-width': '0px',
-			'border-right-width': '1px'
-		});
-		progressbar.append(target);
+        
+        if($(this).find('img').length == 0 ) {
+            var targetscore = $(this).attr('target');
+            var progressbar = $(this).progressbar({
+                value: Math.round($(this).attr('value'))
+            });
+        
+            progressbar.css('position', 'relative');
+            var target = $('<div> </div>');
+            target.css({
+                'position': 'absolute',
+                'top': '0px',
+                'left': '0px',
+                'width': targetscore + '%',
+                'height': '100%',
+                'border-style': 'solid',
+                'border-width': '0px',
+                'border-right-width': '1px'
+            });
+        
+            progressbar.append(target);
+        
+            //If we passed add a check else add an x.
+            var passfail= '';
+            if($(this).attr('value') >= targetscore ) {
+                passfail = $('<img src="pix/tick_green_big.gif"/>');
+            } else {
+                passfail = $('<img src="pix/cross_red_big.gif"/>');
+            }
+       
+            passfail.css({
+                'position' : 'absolute',
+                'width': '16px',
+                'height': '16px',
+                'top' : progressbar.height() / 2 - 8,
+                'left' : progressbar.width() / 2 - 8
+            });
+        
+            passfail.appendTo(progressbar);
+        }
     });
     
     $(".draggable").draggable({
@@ -359,6 +385,7 @@ function init_history_area() {
     });
     
 }
+
 
 function draw_canvas(canvas, data, colorMap) {
     if(canvas.getContext) {
