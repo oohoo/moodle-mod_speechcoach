@@ -4,7 +4,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
 
 $history = optional_param('history', false, PARAM_BOOL);
-
+$target = optional_param('target', 100, PARAM_INT);
 if($history) {
     
     echo "<html><head></head><body>";
@@ -25,7 +25,7 @@ function get_history() {
     echo "<div class='draggable ui-state-default'>";
     echo "Word";
     echo "<button class='play_button'>" . get_string('play', 'speechcoach') . "</button>";
-    echo "<div id='progressbar' style='width: 50%; height:20px; margin:auto'></div>";
+    echo "<div id='progressbar' target='$target' style='width: 50%; height:20px; margin:auto'></div>";
     echo "<input type='checkbox' class='important_button' id='history-'/><label class='important_button_css' for='history-'>" . get_string("important", 'speechcoach') . "</label>";
     echo "<button class='download_button'>" . get_string('download', 'speechcoach') . "</button>";
     echo "<button class='comment_button'>" . get_string('comments', 'speechcoach') . "</button>";
@@ -37,7 +37,8 @@ function get_history() {
             echo "<div class='draggable ui-state-default'>";
             echo "$record->word";
             echo "<button class='play_button'>" . get_string('play', 'speechcoach') . "</button>";
-            echo "<div id='progressbar' style='width: 50%; height:20px; margin:auto'></div>";
+            echo "<div id='progressbar' target='$target' style='width: 50%; height:20px; margin:auto'></div>";
+			echo "<div id='progressbar_target'></div>";
             echo "<input type='checkbox' class='important_button' id='history-$record->id'/><label class='important_button_css' for='history-$record->id'>" . get_string("important", 'speechcoach') . "</label>";
             echo "<button class='download_button'>" . get_string('download', 'speechcoach') . "</button>";
             echo "<button class='comment_button'>" . get_string('comments', 'speechcoach') . "</button>";

@@ -61,6 +61,8 @@ class mod_speechcoach_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
         
+		$mform->addElement('header', '', '');
+		$mform->addElement('text', 'targetscore', get_string('target_score', 'speechcoach'));
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
         $this->standard_coursemodule_elements();

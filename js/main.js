@@ -90,7 +90,6 @@ function init_components() {
                $.post($('#delete_page').attr('value') + "&history_id=" + $(this).attr('history_id'));
                $(this).remove(); 
             });
-            
         }
     });
     
@@ -300,7 +299,8 @@ function init_history_area() {
             primary: "ui-icon-play"
         },
         text: false
-    }).click(function(){
+    }).click(function(event){
+		event.stopPropagation();
         playerRecorder.loadExternalSound($('#get_history_page').attr('value') + '&history_id=' + $(this).parent().attr('history_id') + '&type=user_file');
         playerRecorder.playSound();
     });
@@ -317,9 +317,23 @@ function init_history_area() {
     
                       
     $(".progressbar").each(function() {
-        $(this).progressbar({
+		var targetscore = $(this).attr('target');
+        var progressbar = $(this).progressbar({
             value: Math.round($(this).attr('value'))
         });
+		progressbar.css('position', 'relative');
+		var target = $('<div> </div>');
+		target.css({
+			'position': 'absolute',
+			'top': '0px',
+			'left': '0px',
+			'width': targetscore + '%',
+			'height': '100%',
+			'border-style': 'solid',
+			'border-width': '0px',
+			'border-right-width': '1px'
+		});
+		progressbar.append(target);
     });
     
     $(".draggable").draggable({

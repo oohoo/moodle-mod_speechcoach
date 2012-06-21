@@ -26,15 +26,14 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'speechcoach';
-$string['modulenameplural'] = 'speechcoachs';
+$string['modulename'] = 'Speech Coach';
+$string['modulenameplural'] = 'Speech Coaches';
 $string['modulename_help'] = 'Use the speechcoach module for... | The speechcoach module allows...';
-$string['speechcoachfieldset'] = 'Custom example fieldset';
-$string['speechcoachname'] = 'speechcoach name';
+$string['speechcoachname'] = 'Speech Coach Name';
 $string['speechcoachname_help'] = 'This is the content of the help tooltip associated with the speechcoachname field. Markdown syntax is supported.';
-$string['speechcoach'] = 'speechcoach';
-$string['pluginadministration'] = 'speechcoach administration';
-$string['pluginname'] = 'speechcoach';
+$string['speechcoach'] = 'Speech Coach';
+$string['pluginadministration'] = 'Speech Coach Administration';
+$string['pluginname'] = 'Speech Coach';
 $string['play'] = 'Play';
 $string['record'] = 'Record';
 $string['history'] = 'History';
@@ -69,3 +68,4 @@ $string['playeroptionstxt4'] = 'Check the {$a} box next to Remember';
 $string['playeroptionstxt5'] = 'Click on Close';
 $string['playeroptionstxt6'] = 'Click on OK at the bottom of the window to save your changes.';
 $string['titlePlayerOptions'] = 'Microphone options';
+$string['target_score'] = 'Target Score';

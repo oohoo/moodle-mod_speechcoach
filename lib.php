@@ -363,7 +363,6 @@ function speechcoach_pluginfile($course, $cm, $context, $filearea, array $args, 
 
     $fs = get_file_storage();
     $file = $fs->get_file($fileinfo['contextid'], $fileinfo['component'], $fileinfo['filearea'], $fileinfo['itemid'], $fileinfo['filepath'], $fileinfo['filename']);
-	print_object($file);
     //Onlt creating temp so that we know where to put the mp3 file.
     $temp = tempnam(sys_get_temp_dir(), 'sch');
     $temp2 =  tempnam(sys_get_temp_dir(), 'sch');
@@ -371,7 +370,6 @@ function speechcoach_pluginfile($course, $cm, $context, $filearea, array $args, 
     exec("$CFG->speechcoach_ffmpeg -y -i $temp2 -f mp3 $temp", $output);
     clearstatcache();
 //    echo "ffmpeg -i {$file->get_filepath()} $temp.mp3";
-	echo filesize("$temp");
     header('Content-Type: audio/mpeg');
     header("Content-Disposition: attachment; filename='{$fileinfo['filename']}'");
     header('Content-length: ' . filesize("$temp"));

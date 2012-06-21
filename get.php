@@ -24,8 +24,6 @@ $type = required_param('type', PARAM_TEXT);
 $history_id = required_param('history_id', PARAM_INT);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
-
-
 if ($history_id == 0 && has_capability('mod/speechcoach:edit', $context) && $type == 'history_list') {
     $userid = required_param('user_id', PARAM_INT);
 
@@ -40,10 +38,10 @@ if ($history_id == 0 && has_capability('mod/speechcoach:edit', $context) && $typ
         if ($word && $word->course_module_id == $id) {
             $checked = ($record->important == 1 ? 'checked="checked"' : '');
             $comment = $record->comment == get_string('no_comment', 'speechcoach') ? false : true;
-            echo "<div class='draggable ui-state-default' style='font-size:10px;' history_id='$record->id'>";
+            echo "<div class='draggable ui-state-default' style='font-size: 10px' history_id='$record->id'>";
             echo "$word->word [" . Analysis::get_difficulty_abbrv($record->difficulty) . "]";
             echo "<button class='play_button'>" . get_string('play', 'speechcoach') . "</button>";
-            echo "<div class='progressbar' style='width: 50%; height:20px; margin:auto' value='$record->score'></div>";
+            echo "<div class='progressbar' target='$speechcoach->targetscore' style='width: 50%; height:20px; margin:auto' value='$record->score'></div>";
             echo "<input type='checkbox' class='important_button' $checked id='history-$record->id'/><label class='important_button_css' for='history-$record->id'>" . get_string("important", 'speechcoach') . "</label>";
             echo "<button class='download_button'>" . get_string('download', 'speechcoach') . "</button>";
             echo "<button class='comment_button' comment='$comment'>" . get_string('comments', 'speechcoach') . "</button>";

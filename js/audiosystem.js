@@ -39,11 +39,11 @@ function soundProcessResult(result)
         
         var history_element = "";
         history_element += "<div class='draggable ui-state-default'  style='font-size: 10px' history_id='" + data.history_id + "'>";
-        history_element += $("#word_select :selected").html();
-        history_element += "<button class='play_button'>" + $('.play_button :first').html() + "</button>";
-        history_element += "<div class='progressbar' style='width: 50%; height:20px; margin:auto' value='" + Math.round(100 * data.score) + "'></div>";
-        history_element += "<input type='checkbox' class='important_button' id='history-" + data.history_id + "'/><label class='important_button_css' for='history-" + data.history_id + "'>" + $('.important_button_css :first').html() + "</label>";
 
+        history_element += $("#word_select :selected").html() + $("#difficulty :selected").html().substr($("#difficulty :selected").html().indexOf("["));
+        history_element += "<button class='play_button'>" + $('.play_button :first').html() + "</button>";
+        history_element += "<div class='progressbar' target='" + $('.progressbar').first().attr('target') + "' style='width: 50%; height:20px; margin:auto' value='" + Math.round(100 * data.score) + "'></div>";
+        history_element += "<input type='checkbox' class='important_button' id='history-" + data.history_id + "'/><label class='important_button_css' for='history-" + data.history_id + "'>" + $('.important_button_css :first').html() + "</label>";
         history_element += "<button class='download_button'>" + $('.download_button :first').html() + "</button>";
         history_element += "<button class='comment_button'>" + $('.comment_button :first').html() + "</button>";
         history_element += "</div>";
