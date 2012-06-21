@@ -33,8 +33,6 @@ require_once(dirname(__FILE__) . '/classes/analysis.php');
 $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
 $n = optional_param('n', 0, PARAM_INT);  // speechcoach instance ID - it should be named as the first character of the module
 
-
-
 if ($id) {
     $cm = get_coursemodule_from_id('speechcoach', $id, 0, false, MUST_EXIST);
     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -327,6 +325,8 @@ echo '
 	<div style="clear:both;"></div>
 </div>       
 ';
+
+
 // Finish the page
 echo $OUTPUT->footer();
 ?>
