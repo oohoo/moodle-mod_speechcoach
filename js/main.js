@@ -153,7 +153,7 @@ function init_components() {
         },
         text: true
     }).click(function(){
-        playerRecorder.set_URLLoader($(this).attr('href') + '&word_name=' + $('#aWordTile').val());    
+        playerRecorder.set_URLLoader($(this).attr('href') + '&word_name=' + encodeURIComponent($('#aWordTile').val()));   
         playerRecorder.uploadSound();
         alert("'" + $('#aWordTile').val() + "' added!");
         $('#word_selection').html('');
