@@ -16,7 +16,7 @@ require_capability('mod/speechcoach:edit', $context);
 <html>
     <head></head>
     <body>
-        <select id="word_list" style ="width: 425px; height:125px" multiple="multiple" name="word_list[]">
+        <select id="word_list" style ="width: 505px; height:125px" multiple="multiple" name="word_list[]">
             <?php
             $records = $DB->get_records('speechcoach_words', array('course_module_id' => $cm->id));
             foreach ($records as $record) {

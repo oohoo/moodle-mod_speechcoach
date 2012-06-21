@@ -30,8 +30,6 @@ require_once(dirname(__FILE__) . '/lib.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once(dirname(__FILE__) . '/classes/analysis.php');
 
-
-
 $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
 $n = optional_param('n', 0, PARAM_INT);  // speechcoach instance ID - it should be named as the first character of the module
 
@@ -71,17 +69,19 @@ $PAGE->requires->js('/mod/speechcoach/js/jquery-ui.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/audiosystem.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/comboBox/combobox.js', true);
 
-$PAGE->requires->js('/mod/speechcoach/js/main.js', true);
+$PAGE->requires->js('/mod/speechcoach/js/main_javascript.php', true);
 $PAGE->requires->js('/mod/speechcoach/js/jsTree/jquery.jstree.js', true);
 
+$PAGE->requires->js('/mod/speechcoach/js/MultiSelect/plugins/localisation/jquery.localisation-min.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/MultiSelect/plugins/tmpl/jquery.tmpl.1.1.1.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/MultiSelect/ui.multiselect.js', true);
 
 // Output starts here
 echo $OUTPUT->header();
-
-
 ?>
+<script>
+    $.localise('ui.multiselect', {language: '<?php echo $CFG->lang; ?>', path: 'js/locale/'});
+</script>
 
 <!-- My Content Here -->
 <div id="console_output" style="display:none"></div>
@@ -104,7 +104,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
             <li><a href="#custom_words" style="font-size:small"><?php echo get_string('custom_words', 'speechcoach'); ?></a></li>
         </ul>
         <div id="word_selection">
-            <select id="word_list" style ="width: 425px; height:125px" multiple="multiple" name="word_list[]">
+            <select id="word_list" style ="width: 505px; height:125px" multiple="multiple" name="word_list[]">
                 <?php
                 $records = $DB->get_records('speechcoach_words', array('course_module_id' => $cm->id));
                 foreach ($records as $record) {
@@ -155,7 +155,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
     <div id="content_div">
         <?php
         if (has_capability('mod/speechcoach:edit', $context)) {
-            echo "<span id='word_title' class='ui-state-default ui-corner-all'>Word</span>";
+            echo "<span id='word_title' class='ui-state-default ui-corner-all'>" . get_string('word_s', 'speechcoach') . "</span>";
         } else {
             echo '<select id = "word_select" class = "word_select" >';
 
@@ -177,7 +177,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
                         drawSelectedWord($.parseJSON(data).data);
                     });
                 }); 
-                                        
+                                                    
                 $.post('visualize.php?id=<?php echo $id ?>' + '&word_id=' + $('#word_select :selected').attr('word_id'), function(data) {
 
                     drawSelectedWord($.parseJSON(data).data);
@@ -206,8 +206,8 @@ if (has_capability('mod/speechcoach:edit', $context)) {
 
         <div id='audio_button'>
         </div><br><br>
-		
-		<object type="application/x-shockwave-flash" data="PlayerRecorderCoach.swf" name="playerRecorder" id="playerRecorder" >
+
+        <object type="application/x-shockwave-flash" data="PlayerRecorderCoach.swf" name="playerRecorder" id="playerRecorder" >
             <param name="allowScriptAccess" value="always" />
             <param name="allowFullScreen" value="true" />
             <param name="wmode" value="transparent"> 
@@ -262,7 +262,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
         <h3><a id ="history_header" href="#"> <?php echo get_string('history', 'speechcoach') ?> <span id='remove_history_button' class='ui-icon ui-icon-trash'></span></a></h3>
         <div id="history" >
             <?php
-            //Output the history
+//Output the history
             if (has_capability('mod/speechcoach:edit', $context)) {
                 $records = array();
             } else {
@@ -301,17 +301,17 @@ if (has_capability('mod/speechcoach:edit', $context)) {
 
 
 <?php
-    //Load the flash options menu
-    echo '
-<div id="divPlayerOptions" title="'.get_string('titlePlayerOptions', 'speechcoach').'" style="position:absolute;top:-1000px;">
+//Load the flash options menu
+echo '
+<div id="divPlayerOptions" title="' . get_string('titlePlayerOptions', 'speechcoach') . '" style="position:absolute;top:-1000px;">
 	<div id="divPlayerOptionsText" style="width: 400px;">
-		'.get_string('playeroptionstxt1', 'speechcoach').'
+		' . get_string('playeroptionstxt1', 'speechcoach') . '
 		<ol>
-			<li>'.get_string('playeroptionstxt2', 'speechcoach', '<img src="'.$CFG->wwwroot.'/mod/speechcoach/pix/privacy-ico.png"/>').'</li>
-			<li>'.get_string('playeroptionstxt3', 'speechcoach', '<img src="'.$CFG->wwwroot.'/mod/speechcoach/pix/allow-ico.png"/>').'</li>
-			<li>'.get_string('playeroptionstxt4', 'speechcoach', '<img src="'.$CFG->wwwroot.'/mod/speechcoach/pix/check-ico.png"/>').'</li>
-			<li>'.get_string('playeroptionstxt5', 'speechcoach').'</li>
-			<li>'.get_string('playeroptionstxt6', 'speechcoach').'</li>
+			<li>' . get_string('playeroptionstxt2', 'speechcoach', '<img src="' . $CFG->wwwroot . '/mod/speechcoach/pix/privacy-ico.png"/>') . '</li>
+			<li>' . get_string('playeroptionstxt3', 'speechcoach', '<img src="' . $CFG->wwwroot . '/mod/speechcoach/pix/allow-ico.png"/>') . '</li>
+			<li>' . get_string('playeroptionstxt4', 'speechcoach', '<img src="' . $CFG->wwwroot . '/mod/speechcoach/pix/check-ico.png"/>') . '</li>
+			<li>' . get_string('playeroptionstxt5', 'speechcoach') . '</li>
+			<li>' . get_string('playeroptionstxt6', 'speechcoach') . '</li>
 		</ol>
 	</div>
 	<div id="divPlayerOptionsObj" style="text-align:center;">

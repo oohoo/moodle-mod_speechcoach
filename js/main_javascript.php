@@ -1,3 +1,11 @@
+<?php
+
+header('Content-type: text/javascript');
+require_once(dirname(dirname(dirname(dirname((__FILE__))))) . '/config.php');
+if (false) {
+    ?>
+    <script>
+    <?php } ?>
 $(function () {
 
     $('#loading_div').dialog({
@@ -75,7 +83,7 @@ function init_components() {
         //        $('#history_header').html(history.html() + "<span id='aName'>(" +  name.html() + ")</span>");
         $('#history_header').mouseup();
         $('#history').html('');
-        $('#history').append('<p id="history_loading">Loading...</p>');
+        $('#history').append('<p id="history_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
         $('#history').load($('#get_history_page').attr('value') + '&history_id=0&user_id=' + $(this).attr('value') + '&type=history_list', function() {
             $('#history').remove('#history_loading');
             init_history_area();
@@ -117,7 +125,7 @@ function init_components() {
         text: true
     }).click(function(){
         $('#word_selection').html('');
-        $('#word_selection').append('<p id="word_loading">Loading...</p>');
+        $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
 
         $('#word_selection').load($('#word_selection_page').attr('value'), function() {
             $('#word_selection').remove('#word_loading');
@@ -125,7 +133,7 @@ function init_components() {
         
         $('#add_remove_word_area').dialog({
             modal:true,
-            width: 500
+            width: 575
         });
         
         
@@ -142,9 +150,9 @@ function init_components() {
     }).mouseup(function() {
         playerRecorder.stopSound();
         if(new Date().getTime() - $(this).attr('time') < 1000) {
-            alert("You must hold the record button to record.");
+            alert("<?php echo get_string('hold_record', 'speechcoach'); ?>");
         }
-        alert('Recording Complete');
+        alert("<?php echo get_string('recording_complete', 'speechcoach'); ?>");
     });
     
     $("#save_added_word_button").button({
@@ -155,10 +163,10 @@ function init_components() {
     }).click(function(){
         playerRecorder.set_URLLoader($(this).attr('href') + '&word_name=' + encodeURIComponent($('#aWordTile').val()));   
         playerRecorder.uploadSound();
-        alert("'" + $('#aWordTile').val() + "' added!");
+        alert("'" + $('#aWordTile').val() + "' <?php echo get_string('word_added', 'speechcoach'); ?>");
 
         $('#word_selection').html('');
-        $('#word_selection').append('<p id="word_loading">Loading...</p>');
+        $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
 
         setTimeout(function() {
             $('#word_selection').load($('#word_selection_page').attr('value'), function() {
@@ -201,7 +209,7 @@ function init_components() {
     }).mouseup(function() {
         playerRecorder.stopSound();
         if(new Date().getTime() - $(this).attr('time') < 1000) {
-            alert("You must hold the record button to record.");
+            alert("<?php echo get_string('hold_record', 'speechcoach'); ?>");
         } else {
             //It wil lbe closed in the callback. (See audiosystem.js soundProcessResult)
             $('#loading_div').dialog('open');
