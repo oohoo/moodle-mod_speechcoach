@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'Speech Coach';
 $string['modulenameplural'] = 'Speech Coaches';
-$string['modulename_help'] = 'Use the speechcoach module for... | The speechcoach module allows...';
+$string['modulename_help'] = '';
 $string['speechcoachname'] = 'Speech Coach Name';
 $string['speechcoachname_help'] = 'This is the content of the help tooltip associated with the speechcoachname field. Markdown syntax is supported.';
 $string['speechcoach'] = 'Speech Coach';
@@ -46,7 +46,7 @@ $string['important'] = 'Important';
 $string['users'] = 'Users';
 $string['words'] = 'Words';
 $string['add_word'] = 'Add Word';
-$string['enter_name'] = 'Enter Title';
+$string['enter_name'] = 'Enter Words';
 $string['add_remove'] = 'Add/Remove Words';
 $string['save'] = 'Save';
 $string['select_words'] = 'Select Words';
@@ -69,3 +69,5 @@ $string['playeroptionstxt5'] = 'Click on Close';
 $string['playeroptionstxt6'] = 'Click on OK at the bottom of the window to save your changes.';
 $string['titlePlayerOptions'] = 'Microphone options';
 $string['target_score'] = 'Target Score';
+$string['target_score_help'] = 'Enter a value between 0 - 100';
+
