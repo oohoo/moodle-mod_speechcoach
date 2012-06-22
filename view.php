@@ -70,16 +70,13 @@ $PAGE->requires->js('/mod/speechcoach/js/comboBox/combobox.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/main_javascript.php', true);
 $PAGE->requires->js('/mod/speechcoach/js/jsTree/jquery.jstree.js', true);
 
-$PAGE->requires->js('/mod/speechcoach/js/MultiSelect/plugins/localisation/jquery.localisation-min.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/MultiSelect/plugins/tmpl/jquery.tmpl.1.1.1.js', true);
 $PAGE->requires->js('/mod/speechcoach/js/MultiSelect/ui.multiselect.js', true);
-
+$PAGE->requires->js('/mod/speechcoach/js/locale/ui.multiselect-' . $CFG->lang . '.js', true);
 // Output starts here
 echo $OUTPUT->header();
 ?>
-<script>
-    $.localise('ui.multiselect', {language: '<?php echo $CFG->lang; ?>', path: 'js/locale/'});
-</script>
+
 
 <!-- My Content Here -->
 <div id="console_output" style="display:none"></div>
@@ -88,7 +85,7 @@ echo $OUTPUT->header();
 <div id="get_word_audio_page" value="<?php echo "$CFG->wwwroot/mod/speechcoach/get_word_audio.php?id=$cm->id" ?>"></div>
 <div id="update_comment_page" value="<?php echo "$CFG->wwwroot/mod/speechcoach/update_comment.php?id=$cm->id" ?>"></div>
 <div id="delete_page" value="<?php echo "$CFG->wwwroot/mod/speechcoach/delete.php?id=$cm->id" ?>"></div>
-
+<div id="a_target_score" value ="<?php echo $speechcoach->targetscore; ?>"></div>
 
 <?php
 if (has_capability('mod/speechcoach:edit', $context)) {
@@ -102,7 +99,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
             <li><a href="#custom_words" style="font-size:small"><?php echo get_string('custom_words', 'speechcoach'); ?></a></li>
         </ul>
         <div id="word_selection">
-            <select id="word_list" style ="width: 505px; height:125px" multiple="multiple" name="word_list[]">
+            <select id="word_list" style ="width: 515px; height:125px" multiple="multiple" name="word_list[]">
                 <?php
                 $records = $DB->get_records('speechcoach_words', array('course_module_id' => $cm->id));
                 foreach ($records as $record) {
@@ -175,7 +172,7 @@ if (has_capability('mod/speechcoach:edit', $context)) {
                         drawSelectedWord($.parseJSON(data).data);
                     });
                 }); 
-                                                    
+                                                                            
                 $.post('visualize.php?id=<?php echo $id ?>' + '&word_id=' + $('#word_select :selected').attr('word_id'), function(data) {
 
                     drawSelectedWord($.parseJSON(data).data);

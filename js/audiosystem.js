@@ -1,3 +1,4 @@
+
 //Used to get the flash object 
 function getFlashMovieObject(movieName)
 {
@@ -23,10 +24,10 @@ function soundProcessResult(result)
 {
 
 
-//    console.log(result);
+    //    console.log(result);
     var data = $.parseJSON(result);
     //Make sure this was after an analysis.
-//    console.log(data);
+    //    console.log(data);
 
     if(data != null && 'error' in data) {
         if(data.error == 1) {
@@ -44,7 +45,7 @@ function soundProcessResult(result)
 
         history_element += $("#word_select :selected").html() + $("#difficulty :selected").html().substr($("#difficulty :selected").html().indexOf("["));
         history_element += "<button class='play_button'>" + $('.play_button :first').html() + "</button>";
-        history_element += "<div class='progressbar' target='" + $('.progressbar').first().attr('target') + "' style='width: 50%; height:20px; margin:auto' value='" + Math.round(100 * data.score) + "'></div>";
+        history_element += "<div class='progressbar' target='" + $('#a_target_score').attr('value') + "' style='width: 50%; height:20px; margin:auto' value='" + Math.round(100 * data.score) + "'></div>";
         history_element += "<input type='checkbox' class='important_button' id='history-" + data.history_id + "'/><label class='important_button_css' for='history-" + data.history_id + "'>" + $('.important_button_css :first').html() + "</label>";
         history_element += "<button class='download_button'>" + $('.download_button :first').html() + "</button>";
         history_element += "<button class='comment_button'>" + $('.comment_button :first').html() + "</button>";
@@ -54,7 +55,7 @@ function soundProcessResult(result)
         //Initialize the elements.
         init_history_area();
     } else {
-        alert("Error");
+       // alert("Error");
     }
     $('#loading_div').dialog('close');
 
