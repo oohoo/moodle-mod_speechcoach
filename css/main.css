@@ -37,11 +37,13 @@
 
 #add_remove_button {
     font-size: small;
-    top: 29px;
-    left: 0;
+    position: absolute;
+    top: auto;
+    bottom: 0px;
+    left: 0px;
+    right:auto;
     margin: 4px 0px 0px 0px; 
-    position: relative;
-    width: 200px;
+    width: 225px;
 }
 
 
@@ -56,14 +58,14 @@
 #audio_button {
     position: relative;
     top: 26px;
-	height: 18px;
-	width: 18px;
+    height: 18px;
+    width: 18px;
 }
 
 #playerRecorder {
-	width: 1px;
-	height: 1px;
-	position: absolute;
+    width: 1px;
+    height: 1px;
+    position: absolute;
 }
 
 /*
@@ -112,9 +114,11 @@
 
 
 .difficulty_select {
-    top: 11px;
-    left: 0;
-    position: relative;
+    top: auto;
+    left: 0px;
+    bottom: 0px;
+    right: auto;
+    position: absolute;
     width: 200px;
 }
 
@@ -131,11 +135,13 @@
 }
 
 .rec_button {
-    top: 11px;
     font-size: small;
     height: 29px;
-    position: relative;
-    right: -254px;
+    position: absolute;
+    right: 0px;
+    left: auto;
+    bottom: 0px;
+    top: auto;
 }
 
 .play_button {
