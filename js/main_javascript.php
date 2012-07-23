@@ -113,7 +113,8 @@ if (false) {
     
             $('#history_div').accordion({
                 fillSpace: true,
-                event: 'mouseup'
+                event: 'mouseup',
+                animated: false
             });    
     
             $('#users_div').jstree({
