@@ -85,9 +85,9 @@
 
 #content_div {
     position:relative;
-    display:table-cell;
+    display:table;
     vertical-align: top;
-    height: 250px; 
+    height: 267px; 
     padding: 0px 3px 3px 3px;
 }
 
