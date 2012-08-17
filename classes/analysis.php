@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
+
 class Analysis {
 
     const DIFFICULTY_EASY = 30;

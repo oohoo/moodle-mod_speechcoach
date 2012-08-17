@@ -1,4 +1,22 @@
 <?php
+/**
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
+
+/**
+ * This page was originally designed to get multiple divs taht would be loaded onto
+ * the main page through ajax calls. It now only does this for the history section.
+ */
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
@@ -15,6 +33,9 @@ if($history) {
     
 }
 
+/**
+ * Generates the history section.
+ */
 function get_history() {
     global $DB;
     echo "<div class='ui-widget-header'> " . get_string('history', 'speechcoach') . " </div>";

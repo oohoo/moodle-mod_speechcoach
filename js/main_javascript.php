@@ -1,4 +1,20 @@
 <?php
+/**
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
+/**
+ * javascript for the main file. It is a php file because I wanted to use getstring quickly.
+ */
 header('Content-type: text/javascript');
 require_once(dirname(dirname(dirname(dirname((__FILE__))))) . '/config.php');
 if (false) {
@@ -6,7 +22,9 @@ if (false) {
     <script>
     <?php } ?>
         $(function () {
-
+            /**
+             * Loading message dialog box.
+             */
             $('#loading_div').dialog({
                 'width' : 'auto',
                 'height' : 'auto',
@@ -22,20 +40,27 @@ if (false) {
             }, 450);
         });
 
+        /**
+         * This function analyzes the audio that is currently in the recorder's buffer.
+         */
         function analyze_audio() {
             var word_id = $('#word_select :selected').attr('word_id');
             var difficulty = $('.difficulty_select :selected').attr('value');
     
+            //Set the url to the upload page and add parameters for the word and difficulty level.
             playerRecorder.set_URLLoader($('#upload_page').attr('value') + '&word_id=' + word_id + '&difficulty=' + difficulty);    
 
             playerRecorder.uploadSound();
     
         }
 
+        /**
+         * Initialize all the components of the plugin on the main page.
+         */
         function init_components() {
             init_history_area();
             init_analysis_area();
-            
+            //Make all the draggable things draggable (These will be the history elements.)
             $('.draggable').live('click', function() {
                 if(!$(this).hasClass('ui-state-active history_selected_state')) {
                     $(this).addClass('ui-state-active history_selected_state');
@@ -44,6 +69,7 @@ if (false) {
                 }
             });
 	
+            //This is the options menu for the flash on the page.
             $('#divPlayerOptions').dialog({
                 autoOpen: false,
                 closeOnEscape: false,
@@ -56,13 +82,16 @@ if (false) {
                         }
                     }],
                 open: function(event, ui){
+                    //When it's open don't let them close it without setting the
+                    //settings. We don't want people accidently not setting up the
+                    //settings properly then calling us saying theres a bug.
                     $(".ui-dialog-titlebar-close", $(this).parent()).hide();
                     $("#divPlayerOptions").css('position', 'relative');
                     $("#divPlayerOptions").css('top',0);
                 }
             });
 	
-		
+            //This is the audio settings button that makes the above dialog show up.
             $('#audio_button').button({
                 icons: {
                     primary: "ui-icon-volume-on"
@@ -73,13 +102,10 @@ if (false) {
             });
     
 
-	
-            $(".multiselect_node").live('click', function() {
-        
-            });
-    
+            //This is the user list that a teacher would see. When they select a user
+            //it will load the history for that user.
             $('.user_list').click(function() {
-                //Get the na,e
+                //Get the name
                 var name = $(this).clone();
                 name.children('ins').remove();
         
@@ -88,17 +114,22 @@ if (false) {
                 //        history.children('#aName').remove();
         
                 //        $('#history_header').html(history.html() + "<span id='aName'>(" +  name.html() + ")</span>");
-                $('#history_header').mouseup();
+                $('#history_header').mouseup();//We use mouse up so that it won't overwrite the delete button in the header.
                 $('#history').html('');
-                $('#history').append('<p id="history_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
+                $('#history').append('<p id="history_loading"><?php echo get_string('loading',
+            'speechcoach'); ?></p>');
+                //Load the histpry for a user when clicked.
                 $('#history').load($('#get_history_page').attr('value') + '&history_id=0&user_id=' + $(this).attr('value') + '&type=history_list', function() {
                     $('#history').remove('#history_loading');
                     init_history_area();
                 });
             });
-    
+            
+            //Delete a set of history elements that are selected when this button is pressed.
             $('#remove_history_button').click(function() {
                 var selected = $('.history_selected_state');
+                //Show them the number of thigns to be deleted to limit the number
+                //of accidental deletes
                 if(confirm("Delete (" + selected.length + ") items?")) {
                     selected.each(function () {
                         $.post($('#delete_page').attr('value') + "&history_id=" + $(this).attr('history_id'));
@@ -106,26 +137,30 @@ if (false) {
                     });
                 }
             });
-    
+            
+            //Make the word list that the teacher can use a multiselect Jqury UI object.
             $('#word_list').multiselect();
     
+            //Turn the teacher add/remove words area into a tabbed display.
             $('#add_remove_word_area').tabs();
     
+            //Make the history div an accordian.
             $('#history_div').accordion({
                 fillSpace: true,
-                event: 'mouseup',
+                event: 'mouseup', //Again we use mouse up so that it won't override the trashbin .click
                 animated: false
             });    
     
+            //Make the user list that the teacher sees a tree format.
             $('#users_div').jstree({
                 plugins: ['html_data']
             });
     
     
-    
-     
             $("#difficulty").combobox();           
-  
+            
+            //When the add_remove button is pressed load the teachers add/remove display.
+            //This button and the div it loads will only exist if the user is a taecher.
             $("#add_remove_button").button({
                 icons: {
                     primary: "ui-icon-pencil"
@@ -133,12 +168,14 @@ if (false) {
                 text: true
             }).click(function(){
                 $('#word_selection').html('');
-                $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
-
+                //Create a loading screen.
+                $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading',
+            'speechcoach'); ?></p>');
+                //Load all the words.
                 $('#word_selection').load($('#word_selection_page').attr('value'), function() {
                     $('#word_selection').remove('#word_loading');
                 });
-        
+                //Show the dialog.
                 $('#add_remove_word_area').dialog({
                     modal:true,
                     width: 575
@@ -146,7 +183,8 @@ if (false) {
         
         
             });
-  
+            
+            //Records audio.
             $("#record_word_button").button({
                 icons: {
                     primary: "ui-icon-bullet"
@@ -157,25 +195,36 @@ if (false) {
                 $(this).attr('time', new Date().getTime());
             }).mouseup(function() {
                 playerRecorder.stopSound();
+                //Remind the user to hold the button if he just clicks it.
                 if(new Date().getTime() - $(this).attr('time') < 1000) {
-                    alert("<?php echo get_string('hold_record', 'speechcoach'); ?>");
+                    alert("<?php echo get_string('hold_record',
+            'speechcoach'); ?>");
                 }
-                alert("<?php echo get_string('recording_complete', 'speechcoach'); ?>");
+                alert("<?php echo get_string('recording_complete',
+            'speechcoach'); ?>");
             });
     
+            //Add word button that saves it to the system once it's been recorded. (Teacher Only Still)
             $("#save_added_word_button").button({
                 icons: {
                     primary: "ui-icon-plus"
                 },
                 text: true
             }).click(function(){
+                //Upload the word.
                 playerRecorder.set_URLLoader($(this).attr('href') + '&word_name=' + encodeURIComponent($('#aWordTile').val()));   
                 playerRecorder.uploadSound();
-                alert("'" + $('#aWordTile').val() + "' <?php echo get_string('word_added', 'speechcoach'); ?>");
+                
+                //Give confrimation.
+                alert("'" + $('#aWordTile').val() + "' <?php echo get_string('word_added',
+            'speechcoach'); ?>");
 
                 $('#word_selection').html('');
-                $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading', 'speechcoach'); ?></p>');
+                $('#word_selection').append('<p id="word_loading"><?php echo get_string('loading',
+            'speechcoach'); ?></p>');
 
+                //Reload the word selection. Hope that it has updated within .250 seconds otherwise the word lsit 
+                //on the first page will not have the newly added word.
                 setTimeout(function() {
                     $('#word_selection').load($('#word_selection_page').attr('value'), function() {
                         $('#word_selection').remove('#word_loading');
@@ -184,7 +233,8 @@ if (false) {
        
        
             });
-    
+            
+            
             $("#save_selected_word_buttons").button({
                 icons: {
                     primary: "ui-icon-disk"
@@ -217,7 +267,8 @@ if (false) {
             }).mouseup(function() {
                 playerRecorder.stopSound();
                 if(new Date().getTime() - $(this).attr('time') < 1000) {
-                    alert("<?php echo get_string('hold_record', 'speechcoach'); ?>");
+                    alert("<?php echo get_string('hold_record',
+            'speechcoach'); ?>");
                 } else {
                     //It wil lbe closed in the callback. (See audiosystem.js soundProcessResult)
                     $('#loading_div').dialog('open');
@@ -228,11 +279,14 @@ if (false) {
     
         }
 
+        //Initialize the analysis area. (The main view with the two waveform boxes.)
         function init_analysis_area() {
+            //Make it possible to drop history elements onto this area to load them.
             $(".droppable").droppable({
                 activeClass: "ui-state-hover",
                 hoverClass: "ui-state-active",
                 drop: function( event, ui ) {
+                    //When an element is dropped load it's data.
                     $('#loading_div').dialog('open');
 
                     if($('#word_select').length) {
@@ -248,7 +302,8 @@ if (false) {
                 },
                 accept: ".draggable"
             });
-    
+            
+            //A Play button that plays audio of the master file.
             $(".master_play_button").button({
                 icons: {
                     primary: "ui-icon-play"
@@ -263,7 +318,8 @@ if (false) {
        
                 playerRecorder.playSound();
             });
-    
+            
+            //A play button that plays the audio of the current recording.
             $("#recording_play_button").button({
                 icons: {
                     primary: "ui-icon-play"
@@ -277,8 +333,12 @@ if (false) {
             });
         }
 
+        /**
+         *  Initialize the history area. (3 boxes on right side.) 
+         */
         function init_history_area() {
-                 
+            
+            //Make all download buttons download files.
             $(".download_button").button({
                 icons: {
                     primary: "ui-icon-disk"
@@ -304,8 +364,12 @@ if (false) {
                 return false;
             });
     
+            
+            //Make comment buttons disabled if there are not comments for the user.
+            //Comment buttons will always be enabled for teachers so they can add
+            //comments.
             $(".comment_button").each(function(index, value) {
-                //title only exists if editor.
+                //title only exists if user is a teacher,
                 if($(value).attr('comment') || $('#word_title').length) {
                     $(value).button('option', 'disabled', false);
                 } else {
@@ -325,6 +389,7 @@ if (false) {
                 playerRecorder.playSound();
             });
 
+            //Mark history element as important.
             $(".important_button").button({
                 icons: {
                     primary: "ui-icon-star"
@@ -334,7 +399,7 @@ if (false) {
                 $.post($('#update_comment_page').attr('value') + '&history_id=' + $(this).parent().attr('history_id') + '&important=' + (this.checked ? '1' : '0'));
             });
     
-                      
+            //Set the progress bar for each element.
             $(".progressbar").each(function() {
                 var targetscore = $(this).attr('target');
                 var progressbar = $(this).progressbar({
@@ -376,6 +441,7 @@ if (false) {
                     passfail.appendTo(progressbar);
                 }
             });
+            
             $(".draggable").draggable({
                 helper: function() {
 
@@ -394,7 +460,12 @@ if (false) {
     
         }
 
-
+        /**
+         * Draw audio waveform with the given colormap and data.
+         * @param canvas The canvas you wish to draw to.
+         * @param int[] data an array of datapoints that make up the audio data. (Compressed for drawing)
+         * @param color[] A color associated with each datapoint.
+         */
         function draw_canvas(canvas, data, colorMap) {
             if(canvas.getContext) {
                 var context = canvas.getContext('2d');
@@ -417,7 +488,12 @@ if (false) {
             
             }
         }
-
+        
+        /**
+         * Draw the masterfile waveform
+         * 
+         * @param data The audio data for the master file. (Compressed for drawing)
+         */
         function drawSelectedWord(data) {
             draw_canvas(document.getElementById('master_file'), data, generate_master_color_map(data));
     
@@ -425,6 +501,12 @@ if (false) {
             clear(c_canvas, c_canvas.getContext('2d'));
         }
 
+        /**
+         * Clears a given canvas.
+         * 
+         * @param canvas the canvas to be cleared.
+         * @param context the context that was genereated from this canvas.
+         */
         function clear(canvas, context) {
             context.save();
             context.fillStyle = 'white';
@@ -432,6 +514,14 @@ if (false) {
             context.restore();
         }
 
+        /**
+         * Generates a colormap from the fram scores of the data.
+         * 
+         * @param frame_scores a score between 0-100 that is given to each frame
+         * of the audio. In the user file. This is not nessically the same length 
+         * as the data object but it does take up the same amount of time so it can be converted.
+         * @param data the audio data.
+         */
         function generate_color_map(frame_scores, data) {
             var color_map = new Array();
             for(var i = 0; i < data.length; i++) {
@@ -443,6 +533,9 @@ if (false) {
                 
         }
             
+        /**
+         * Generate the color map for the master audio sample. -- Always black for now.
+         */    
         function generate_master_color_map(data) {
             var color_map = new Array();
             for(var i = 0; i < data.length; i++) {
@@ -455,6 +548,11 @@ if (false) {
             return color_map;
         }
             
+        /**
+         * Generate a color based on the score. Red is bad Green is good Yellow is in the middle.
+         * 
+         * @param value the score you wish to turn into a color.
+         */
         function findColor(value) {
             var red = 255;
             var green = 255;

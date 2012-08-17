@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
+
+/**
+ * This file visualizes the waveform of the audio file that is passed in.
+ */
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
 
@@ -8,18 +25,23 @@ $n = optional_param('n', 0, PARAM_INT);  // speechcoach instance ID - it should 
 
 if ($id) {
     $cm = get_coursemodule_from_id('speechcoach', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $speechcoach = $DB->get_record('speechcoach', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $cm->course), '*',
+            MUST_EXIST);
+    $speechcoach = $DB->get_record('speechcoach', array('id' => $cm->instance),
+            '*', MUST_EXIST);
 } elseif ($n) {
-    $speechcoach = $DB->get_record('speechcoach', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $speechcoach->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('speechcoach', $speechcoach->id, $course->id, false, MUST_EXIST);
+    $speechcoach = $DB->get_record('speechcoach', array('id' => $n), '*',
+            MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $speechcoach->course),
+            '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('speechcoach', $speechcoach->id,
+            $course->id, false, MUST_EXIST);
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
 
 require_login($course, true, $cm);
-
+//Get the word file.
 $word_id = required_param('word_id', PARAM_INT);
 $word = $DB->get_record('speechcoach_words', array('id' => $word_id));
 
@@ -31,7 +53,9 @@ $file->copy_content_to($tempname);
 
 clearstatcache();
 
+//Pass the word file into the acoustic suite and retreive the waveform map.
 echo shell_exec("$CFG->speechcoach_java" . ' -cp "Oohoo Acoustic Suite - Server.jar" oohoo.acoustic.suite.server.Visualize ' . $tempname);
 
+//Delete the tempo file.
 unlink($tempname);
 ?>

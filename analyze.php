@@ -1,4 +1,27 @@
 <?php
+
+/**
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
+
+/**
+ * This page is the one called by the recording flash element. It's purpose is
+ * to perform the actions that that page told it to. This will either be downloading
+ * the file or analyzing the audio.
+ * 
+ * This page will be called immediatly after a recording is finished if it is an analysis
+ * call, otherwise it will be called when the play button is pressed. (Which requires a "download")
+ */
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
 
@@ -7,12 +30,17 @@ $n = optional_param('n', 0, PARAM_INT);  // speechcoach instance ID - it should 
 
 if ($id) {
     $cm = get_coursemodule_from_id('speechcoach', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $speechcoach = $DB->get_record('speechcoach', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $cm->course), '*',
+            MUST_EXIST);
+    $speechcoach = $DB->get_record('speechcoach', array('id' => $cm->instance),
+            '*', MUST_EXIST);
 } elseif ($n) {
-    $speechcoach = $DB->get_record('speechcoach', array('id' => $n), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $speechcoach->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('speechcoach', $speechcoach->id, $course->id, false, MUST_EXIST);
+    $speechcoach = $DB->get_record('speechcoach', array('id' => $n), '*',
+            MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $speechcoach->course),
+            '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('speechcoach', $speechcoach->id,
+            $course->id, false, MUST_EXIST);
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
@@ -24,6 +52,7 @@ $difficulty = required_param('difficulty', PARAM_INT);
 require_login($course, true, $cm);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
+//If the file is to be downloaded the download the file.
 if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
     header('Content-disposition: attachment; filename=' . $_REQUEST['soundfilename']);
     header('Content-type: media/wav');
@@ -39,7 +68,7 @@ if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
     if (strlen($contentSound) > 44) {
         file_put_contents($tempname, $contentSound);
     }
-   
+
 
     $filepath = uniqid();
     while (filepath_exists($filepath)) {
@@ -69,7 +98,8 @@ if (isset($_REQUEST['downloadfile']) && $_REQUEST['downloadfile'] == true) {
         $file = $fs->get_file_by_id($word->file_id);
         $file->copy_content_to($masterfile);
     } else {
-        $file = $DB->get_record('speechcoach_base_words', array('id' => $word->base_id));
+        $file = $DB->get_record('speechcoach_base_words',
+                array('id' => $word->base_id));
         $contents = file_get_contents($file->file_address);
         file_put_contents($masterfile, $contents);
     }
@@ -123,7 +153,8 @@ function filepath_exists($filepath) {
 
     global $context;
     $fs = get_file_storage();
-    $files = $fs->get_area_files($context->id, 'mod_speechcoach', 'history_audio');
+    $files = $fs->get_area_files($context->id, 'mod_speechcoach',
+            'history_audio');
 
     foreach ($files as $file) {
         if ($file->get_filepath() == $filepath) {

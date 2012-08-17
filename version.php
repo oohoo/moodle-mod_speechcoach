@@ -1,15 +1,17 @@
 <?php
 /**
- * Defines the version of speechcoach
- *
- * This code fragment is called by moodle_needs_upgrading() and
- * /admin/index.php
- *
- * @package    mod
- * @subpackage speechcoach
- * @copyright  2011 Your Name
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+ * ************************************************************************
+ * *                           Speech Coach                              **
+ * ************************************************************************
+ * @package     mod                                                      **
+ * @subpackage  Speech Coach                                             **
+ * @name        Speech Coach                                             **
+ * @copyright   oohoo.biz                                                **
+ * @link        http://oohoo.biz                                         **
+ * @author      Andrew McCann                                            **
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later **
+ * ************************************************************************
+ * ************************************************************************ */
 
 defined('MOODLE_INTERNAL') || die();
 
