@@ -47,20 +47,25 @@ class mod_speechcoach_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field
-        $mform->addElement('text', 'name', get_string('speechcoachname', 'speechcoach'), array('size' => '64'));
+        $mform->addElement('text', 'name',
+                get_string('speechcoachname', 'speechcoach'),
+                array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
             $mform->setType('name', PARAM_CLEAN);
         }
         $mform->addRule('name', null, 'required', null, 'client');
-        $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        $mform->addRule('name', get_string('maximumchars', '', 255),
+                'maxlength', 255, 'client');
 
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
 
         $mform->addElement('header', '', '');
-        $mform->addElement('text', 'targetscore', get_string('target_score', 'speechcoach'));
+        $mform->addElement('text', 'targetscore',
+                get_string('target_score', 'speechcoach'));
+        $mform->setType('targetscore', PARAM_INT);
         $mform->addHelpButton('targetscore', 'target_score', 'speechcoach');
 
         //-------------------------------------------------------------------------------
