@@ -59,7 +59,7 @@ $capabilities = array(
         )
     ),
     
-    'mod/vidtrans:addinstance' => array(
+    'mod/speechcoach:addinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
