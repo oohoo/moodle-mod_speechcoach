@@ -194,10 +194,14 @@ SCRIPT;
 
             //Generate an alaysis map of the audio.
             $output = '';
-            exec("java -cp \"Oohoo Acoustic Suite - Server.jar\" oohoo.acoustic.suite.server.SentanceCompare $masterfile $comparisonfile $history->difficulty",
+            exec("$CFG->speechcoach_java" . " -cp \"Oohoo Acoustic Suite - Server.jar\" oohoo.acoustic.suite.server.SentanceCompare $masterfile $comparisonfile $history->difficulty",
                     $output);
             //Insert into database.
-            $data = json_decode($output[0]);
+            $data = null;
+            if(isset($output[0]))
+            {
+                $data = json_decode($output[0]);
+            }
 
             $data = json_encode($data);
             //Load this audio data into the alaysis area.

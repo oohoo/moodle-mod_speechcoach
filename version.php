@@ -15,9 +15,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version = 2012081500;
+$module->version = 2013030400;
 $module->requires = 2010031900;
 $module->maturity = MATURITY_STABLE;
-$module->release = '1.0.0';
+$module->release = '1.0.1  (Build: 2013030400)';
 $module->component = 'mod_speechcoach';
 $module->cron      = 0;               // Period for cron to check this module (secs)
